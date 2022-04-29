@@ -1,7 +1,15 @@
-import React from "react";
+import { useRouter } from "next/router";
+import Layout from "../../components/Layout";
 
-function event() {
-  return <div>event</div>;
-}
+const event = () => {
+  // const router = useRouter();
+  // console.log("router ", router);
+
+  return (
+    <Layout>
+      <h1>My Event</h1>
+    </Layout>
+  );
+};
 
 export default event;
