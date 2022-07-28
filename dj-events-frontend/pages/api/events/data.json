@@ -1,0 +1,28 @@
+{
+  "events": [
+    {
+      "id": "1",
+      "name": "event 1",
+      "slug": "throwback-thursdays-with-dj-manny-duke",
+      "venue": "horizon club",
+      "address": "919 3rd avenue New Yorkn New York",
+      "performers": "DJ Manny Duke",
+      "date": "June 09, 2021",
+      "time": "10:35 PM EST",
+      "description": "Featuring deep cuts, party for the millions with the very best music of the 90's and 2000's",
+      "image": "/images/sample/event1.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Boom dance music festival",
+      "slug": "boom-dance-music-festival-dj-freeking-cool",
+      "venue": "BoomLand",
+      "address": "Barragem do Alqueva",
+      "performers": "DJ Freeking cool",
+      "date": "June 19, 2021",
+      "time": "11:00 PM EST",
+      "description": "Featuring deep cuts, party for the millions with the very best music of the 90's and 2000's",
+      "image": "/images/sample/event2.jpg"
+    }
+  ]
+}
