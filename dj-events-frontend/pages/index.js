@@ -4,6 +4,7 @@ import EventItem from "components/EventItem";
 import Link from "next/link";
 
 export default function HomePage({ events }) {
+  console.log(events);
   return (
     <Layout>
       <h1>Upcoming Events</h1>
@@ -23,13 +24,14 @@ export default function HomePage({ events }) {
 }
 
 export async function getServerSideProps() {
-  const res = await fetch(`${API_URL}/api/events`);
+  const res = await fetch(`${API_URL}/events?_sort=date:ASC&_limit=3`);
   const events = await res.json();
+  console.log("EVENTS ", events);
 
   return {
     props: {
-      events: events.slice(0, 3),
-      revalidate: 1,
+      events,
     },
+    // revalidate: 1,
   };
 }
