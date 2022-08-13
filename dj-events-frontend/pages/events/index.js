@@ -9,19 +9,19 @@ export default function EventsPage({ events }) {
 
       {events.length === 0 && <h3>No events to show</h3>}
       {events.map((evt) => {
-        return <EventItem key={evt.id} evt={evt} />;
+        return <EventItem key={evt.id} evt={evt.attributes} />;
       })}
     </Layout>
   );
 }
 
 export async function getServerSideProps() {
-  const res = await fetch(`${API_URL}/api/events`);
+  const res = await fetch(`${API_URL}/events?populate=*&_sort=date:ASC`);
   const events = await res.json();
 
   return {
     props: {
-      events,
+      events: events.data,
     },
     // revalidate: 1,
   };
