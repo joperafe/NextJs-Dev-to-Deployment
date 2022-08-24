@@ -10,6 +10,7 @@ import moment from "moment";
 import Image from "next/image";
 import { FaImage } from "react-icons/fa";
 import Modal from "components/Modal";
+import ImageUpload from "components/ImageUpload";
 
 export default function EditEventPage({ evt }) {
   // console.log("EVT ", evt);
@@ -63,6 +64,15 @@ export default function EditEventPage({ evt }) {
     const { name, value } = e.target;
 
     setValues({ ...values, [name]: value });
+  };
+
+  const imageUploaded = async (e) => {
+    const res = await fetch(`${API_URL}/events/${evt.id}?populate=*`);
+    const { data } = await res.json();
+    // !! Beware of destructure not tested
+
+    setImagePreview(data.attributes.image.data ? data.attributes.image.data.attributes.formats.thumbnail.url : null);
+    setShowModal(false);
   };
 
   return (
@@ -130,13 +140,13 @@ export default function EditEventPage({ evt }) {
         </div>
       )}
       <div>
-        <button class="btn-secundary" onClick={() => setShowModal(true)}>
+        <button className="btn-secundary" onClick={() => setShowModal(true)}>
           <FaImage /> Set Image
         </button>
       </div>
 
       <Modal show={showModal} onClose={() => setShowModal(false)}>
-        IMAGE UPLOAD
+        <ImageUpload evtId={evt.id} imageUploaded={imageUploaded} />
       </Modal>
     </Layout>
   );
