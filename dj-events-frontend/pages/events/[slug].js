@@ -26,6 +26,7 @@ export default function EventPage({ evt }) {
       }
     }
   };
+
   return (
     <Layout>
       <div className={styles.event}>
@@ -47,7 +48,11 @@ export default function EventPage({ evt }) {
         {evt.attributes.image && (
           <div className={styles.image}>
             <Image
-              src={evt.image && evt.image.data ? evt.attributes.image.data.attributes.url : "/images/event-default.png"}
+              src={
+                evt.attributes.image && evt.attributes.image.data
+                  ? evt.attributes.image.data.attributes.url
+                  : "/images/event-default.png"
+              }
               width={960}
               height={600}
             />
@@ -71,7 +76,7 @@ export default function EventPage({ evt }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch(`${API_URL}/events`);
+  const res = await fetch(`${API_URL}/events?populate=*`);
   const events = await res.json();
 
   const paths = events.data.map((evt) => ({
