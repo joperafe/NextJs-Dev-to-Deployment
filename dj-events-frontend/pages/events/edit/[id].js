@@ -9,6 +9,7 @@ import { API_URL } from "config";
 import moment from "moment";
 import Image from "next/image";
 import { FaImage } from "react-icons/fa";
+import Modal from "components/Modal";
 
 export default function EditEventPage({ evt }) {
   // console.log("EVT ", evt);
@@ -26,6 +27,8 @@ export default function EditEventPage({ evt }) {
   const [imagePreview, setImagePreview] = useState(
     evtAttributes.image.data ? evtAttributes.image.data.attributes.formats.thumbnail.url : null
   );
+
+  const [showModal, setShowModal] = useState(false);
 
   const router = useRouter();
 
@@ -126,9 +129,15 @@ export default function EditEventPage({ evt }) {
           <p>No image uploaded</p>
         </div>
       )}
-      <button class="btn-secundary">
-        <FaImage /> Set Image
-      </button>
+      <div>
+        <button class="btn-secundary" onClick={() => setShowModal(true)}>
+          <FaImage /> Set Image
+        </button>
+      </div>
+
+      <Modal show={showModal} onClose={() => setShowModal(false)}>
+        IMAGE UPLOAD
+      </Modal>
     </Layout>
   );
 }
