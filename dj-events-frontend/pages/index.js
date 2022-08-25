@@ -31,6 +31,6 @@ export async function getServerSideProps() {
     props: {
       events: events.data,
     },
-    revalidate: 1,
+    // revalidate: 1,
   };
 }
