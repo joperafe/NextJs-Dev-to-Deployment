@@ -47,6 +47,7 @@ export const AuthProvider = ({ children }) => {
       body: JSON.stringify({ identifier, password }),
     });
 
+    // console.log("what data???");
     const data = await res.json();
     // console.log(data);
 
