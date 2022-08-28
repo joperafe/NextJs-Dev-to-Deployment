@@ -23,6 +23,8 @@ module.exports = createCoreController("api::event.event", ({ strapi }) => ({
       // populate: true,
     });
 
+    // console.log("DATA EVENTS ", user, data);
+
     const sanitizedEntity = await this.sanitizeOutput(data, ctx);
 
     return this.transformResponse(sanitizedEntity);
