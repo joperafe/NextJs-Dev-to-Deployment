@@ -16,10 +16,15 @@ module.exports = createCoreController("api::event.event", ({ strapi }) => ({
       const { data, files } = parseMultipartData(ctx);
 
       data.user = ctx.state.user.id;
-      entity = await strapi.query("api::event.event").create(data, { files });
+      entity = await strapi.entityService.create("api::event.event", data, {
+        files,
+      });
     } else {
-      ctx.request.body.user = ctx.state.user.id;
-      entity = await strapi.query("api::event.event").create(ctx.request.body);
+      ctx.request.body.data.user = ctx.state.user.id;
+      entity = await strapi.entityService.create(
+        "api::event.event",
+        ctx.request.body
+      );
     }
 
     const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
@@ -33,7 +38,7 @@ module.exports = createCoreController("api::event.event", ({ strapi }) => ({
 
     let entity;
 
-    const [event] = await strapi.query("api::event.event").findMany({
+    const [event] = await strapi.entityService.findMany("api::event.event", {
       where: { id, user: ctx.state.user.id },
     });
 
@@ -44,14 +49,12 @@ module.exports = createCoreController("api::event.event", ({ strapi }) => ({
     if (ctx.is("multipart")) {
       const { data, files } = parseMultipartData(ctx);
 
-      entity = await strapi.db.query("api::event.event").update({
-        where: { id },
+      entity = await strapi.entityService.update("api::event.event", id, {
         data,
         files,
       });
     } else {
-      entity = await strapi.db.query("api::event.event").update({
-        where: { id },
+      entity = await strapi.entityService.update("api::event.event", id, {
         data: ctx.request.body,
       });
     }
@@ -65,15 +68,17 @@ module.exports = createCoreController("api::event.event", ({ strapi }) => ({
   async delete(ctx) {
     const { id } = ctx.params;
 
-    const [events] = await strapi.query("api::event.event").findMany({
-      where: { id, user: ctx.state.user.id },
-    });
+    const [events] = await strapi.entityService.findMany(
+      "api::event.event",
+      id,
+      { user: ctx.state.user.id }
+    );
 
     if (!events) {
       return ctx.unauthorized(`You can't update this entry`);
     }
 
-    const entity = await strapi.db.query("api::event.event").delete({ id });
+    const entity = await strapi.entityService.delete("api::event.event", id);
 
     const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
 
@@ -93,8 +98,6 @@ module.exports = createCoreController("api::event.event", ({ strapi }) => ({
       where: { user: user.id },
       // populate: true,
     });
-
-    // console.log("DATA EVENTS ", user, data);
 
     const sanitizedEntity = await this.sanitizeOutput(data, ctx);
 
