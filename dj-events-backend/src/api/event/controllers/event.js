@@ -54,9 +54,11 @@ module.exports = createCoreController("api::event.event", ({ strapi }) => ({
         files,
       });
     } else {
-      entity = await strapi.entityService.update("api::event.event", id, {
-        data: ctx.request.body,
-      });
+      entity = await strapi.entityService.update(
+        "api::event.event",
+        id,
+        ctx.request.body
+      );
     }
 
     const sanitizedEntity = await this.sanitizeOutput(entity, ctx);
