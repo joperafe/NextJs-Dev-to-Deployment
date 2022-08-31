@@ -1,3 +1,4 @@
+import EventMap from "components/EventMap";
 import { API_URL } from "config";
 import Image from "next/image";
 import Link from "next/link";
@@ -67,6 +68,10 @@ export default function EventPage({ evt }) {
         <h3>Venue: {evt.attributes.venue}</h3>
         <p>{evt.attributes.address}</p>
 
+        {/* Height had to be set because map canvas height was being set to 0 */}
+        <div style={{ height: 500 }}>
+          <EventMap evt={evt} />
+        </div>
         <Link href="/events">
           <a className={styles.back}> {"<"} Go Back</a>
         </Link>
